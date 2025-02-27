@@ -1,18 +1,13 @@
 async function image_generation_via_stable_diffusion_3(params, userSettings) {
-  const { prompt, negative_prompt } = params;
-  const { stabilityAPIKey, output_format, aspect_ratio, model } = userSettings;
+  const { prompt } = params;
+  const { stabilityAPIKey } = userSettings;
   validateAPIKey(stabilityAPIKey);
 
   try {
     const imageData = await generateImageFromStabilityAPI(
       stabilityAPIKey,
       prompt,
-      {
-        output_format,
-        aspect_ratio,
-        model,
-        negative_prompt
-      }
+      userSettings
     );
 
     return imageData;
@@ -43,7 +38,7 @@ async function generateImageFromStabilityAPI(
   output_format && body.append('output_format', output_format);
   aspect_ratio && body.append('aspect_ratio', aspect_ratio);
   model && body.append('model', model);
-  negative_prompt && body.append("negative_prompt", negative_prompt);
+  negative_prompt && body.append('negative_prompt', negative_prompt);
 
   const response = await fetch(apiUrl, {
     method: 'POST',
