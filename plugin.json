@@ -42,6 +42,12 @@
       "type": "enum",
       "values": ["sd3-medium", "sd3-large", "sd3-large-turbo"],
       "defaultValue": "sd3-large"
+    },
+    {
+      "name": "negative_prompt",
+      "label": "Negative prompt",
+      "description": "Optional, a blurb of text describing what you do not wish to see in the output image",
+      "defaultValue": ""
     }
   ],
   "iconURL": "https://www.typingmind.com/stable-diffusion.png",
@@ -55,10 +61,6 @@
         "prompt": {
           "type": "string",
           "description": "The text description of the desired image."
-        },
-        "negative_prompt": {
-          "type": "string",
-          "description": "A blurb of text describing what you do not wish to see in the output image. Include only if the user asks for it."
         }
       }
     },
