@@ -63,7 +63,7 @@ function getEndpointForModel(model) {
 async function generateImageFromStabilityAPI(
   apiKey,
   prompt,
-  { output_format, aspect_ratio, model, negative_prompt } = {}
+  { output_format, aspect_ratio, model, negative_prompt, style_preset } = {}
 ) {
   const apiUrl = getEndpointForModel(model);
 
@@ -83,6 +83,7 @@ async function generateImageFromStabilityAPI(
   }
   
   negative_prompt && body.append('negative_prompt', negative_prompt);
+  style_preset && body.append('style_preset', style_preset);
 
   const response = await fetch(apiUrl, {
     method: 'POST',
