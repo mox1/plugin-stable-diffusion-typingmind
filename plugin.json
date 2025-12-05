@@ -89,7 +89,7 @@
   ],
   "iconURL": "https://www.typingmind.com/stable-diffusion.png",
   "title": "Stable Diffusion Plugin",
-  "openaiSpecs": [
+  "openaiSpec": [
     {
       "name": "image_generation_via_stable_diffusion_3",
       "parameters": {
