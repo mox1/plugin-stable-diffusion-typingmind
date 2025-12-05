@@ -1,0 +1,149 @@
+{
+  "id": "image_generation_via_stable_diffusion_3",
+  "uuid": "0bcb3d58-b879-4e70-9b0d-3b0ce3f4bf07",
+  "userSettings": [
+    {
+      "name": "stabilityAPIKey",
+      "required": true,
+      "type": "password",
+      "label": "StabilityAI API Key",
+      "description": "Get your free API Key from StabilityAI: https://platform.stability.ai/account/keys"
+    },
+    {
+      "name": "output_format",
+      "label": "Format of the generated image",
+      "description": "Optional, default: \"png\"",
+      "type": "enum",
+      "values": ["jpeg", "png", "webp"],
+      "defaultValue": "png"
+    },
+    {
+      "name": "style_preset",
+      "label": "Style preset",
+      "description": "Optional, guides the model toward a particular style.",
+      "type": "enum",
+      "values": [
+        "",
+        "3d-model",
+        "analog-film",
+        "anime",
+        "cinematic",
+        "comic-book",
+        "digital-art",
+        "enhance",
+        "fantasy-art",
+        "isometric",
+        "line-art",
+        "low-poly",
+        "modeling-compound",
+        "neon-punk",
+        "origami",
+        "photographic",
+        "pixel-art",
+        "tile-texture"
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "aspect_ratio",
+      "label": "Aspect ratio of the generated image",
+      "description": "Optional, default: \"1:1\"",
+      "type": "enum",
+      "values": [
+        "16:9",
+        "1:1",
+        "21:9",
+        "2:3",
+        "3:2",
+        "4:5",
+        "5:4",
+        "9:16",
+        "9:21"
+      ],
+      "defaultValue": "1:1"
+    },
+    {
+      "name": "model",
+      "label": "Model to use for generation",
+      "description": "Optional, default: \"stable-image-core\"",
+      "type": "enum",
+      "values": [
+        "sd3-medium",
+        "sd3-large",
+        "sd3-large-turbo",
+        "stable-image-ultra",
+        "stable-image-core",
+        "sd3.5-medium",
+        "sd3.5-large",
+        "sd3.5-large-turbo",
+        "sd3.5-flash"
+      ],
+      "defaultValue": "stable-image-core"
+    },
+    {
+      "name": "negative_prompt",
+      "label": "Negative prompt",
+      "description": "Optional, a blurb of text describing what you do not wish to see in the output image",
+      "defaultValue": ""
+    }
+  ],
+  "iconURL": "https://www.typingmind.com/stable-diffusion.png",
+  "title": "Stable Diffusion Plugin",
+  "openaiSpec": {
+    "name": "image_generation_via_stable_diffusion_3",
+    "parameters": {
+      "type": "object",
+      "required": ["prompt"],
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "The text description of the desired image."
+        },
+        "style_preset": {
+          "type": "string",
+          "description": "Optional style preset to guide the image style. This guides the image model towards a particular style.",
+          "enum": [
+            "",
+            "3d-model",
+            "analog-film",
+            "anime",
+            "cinematic",
+            "comic-book",
+            "digital-art",
+            "enhance",
+            "fantasy-art",
+            "isometric",
+            "line-art",
+            "low-poly",
+            "modeling-compound",
+            "neon-punk",
+            "origami",
+            "photographic",
+            "pixel-art",
+            "tile-texture"
+          ],
+          "default": ""
+        }
+      }
+    },
+   "description": "Generates images using Stable Diffusion ultra,core and 3.5 based on a text description. Adhere to guidelines such as English translation.\n\n Retain text references.\n\nPrompt changes aren't allowed unless they anonymise individuals. All prompts should detail every image part in objective terms within a detailed paragraph of over three sentences.\n\nImportant: after calling this function, the output images will be shown to the user automatically. You don't need to include the output image to the users again in your response to avoid duplicate images."
+  },
+  "httpAction": {
+    "id": "4105dcae-c4c5-432f-91cd-af69188adda4",
+    "method": "POST",
+    "name": "",
+    "url": "https://api.stability.ai/v2beta/stable-image/generate/core",
+    "requestBody": "{\"prompt\":\"{prompt}\",\"model\":\"{model}\",\"aspect_ratio\":\"{aspect_ratio}\",\"negative_prompt\":\"{negative_prompt}\",\"output_format\":\"{output_format}\",\"style_preset\":\"{style_preset}\"}",
+    "requestBodyFormat": "form-data",
+    "requestHeaders": "{\"Accept\":\"application/json; type=image/*\",\"Authorization\":\"Bearer {stabilityAPIKey}\"}",
+    "resultTransform": {
+      "engine": "handlebars",
+      "templateString": "![{{__VARIABLES.prompt}}{{#if __VARIABLES.style_preset}} (style: {{__VARIABLES.style_preset}}){{/if}}](data:image/{{__VARIABLES.output_format}};base64,{{image}})"
+    },
+    "hasResultTransform": true,
+    "hasBody": true,
+    "hasHeaders": true
+  },
+  "implementationType": "javascript",
+  "outputType": "render_markdown"
+}
