@@ -46,14 +46,13 @@ function getEndpointForModel(model) {
   }
 
   // Route to appropriate endpoint based on model
-  if (model.startsWith('sd3')) {
+  if (model.startsWith('sd3') || model.startsWith('stable-diffusion-3.5')) {
+    // SD3 and 3.5 models use the same endpoint with model parameter
     return 'https://api.stability.ai/v2beta/stable-image/generate/sd3';
   } else if (model === 'stable-image-ultra') {
     return 'https://api.stability.ai/v2beta/stable-image/generate/ultra';
   } else if (model === 'stable-image-core') {
     return 'https://api.stability.ai/v2beta/stable-image/generate/core';
-  } else if (model.startsWith('stable-diffusion-3.5')) {
-    return 'https://api.stability.ai/v2beta/stable-image/generate/3.5';
   }
 
   // Fallback to core endpoint
@@ -74,11 +73,9 @@ async function generateImageFromStabilityAPI(
   output_format && body.append('output_format', output_format);
   aspect_ratio && body.append('aspect_ratio', aspect_ratio);
   
-  // Only append model parameter for SD3 models (other endpoints are model-specific)
-  if (model && model.startsWith('sd3')) {
-    body.append('model', model);
-  } else if (model && model.startsWith('stable-diffusion-3.5')) {
-    // For 3.5 models, append the model parameter
+  // Append model parameter for SD3 and 3.5 models (they use the same endpoint)
+  // Ultra and Core endpoints are model-specific and don't need the model parameter
+  if (model && (model.startsWith('sd3') || model.startsWith('stable-diffusion-3.5'))) {
     body.append('model', model);
   }
   
