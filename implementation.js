@@ -38,12 +38,34 @@ function validateAPIKey(apiKey) {
     );
   }
 }
+
+function getEndpointForModel(model) {
+  // Default to core if no model specified
+  if (!model) {
+    return 'https://api.stability.ai/v2beta/stable-image/generate/core';
+  }
+
+  // Route to appropriate endpoint based on model
+  if (model.startsWith('sd3')) {
+    return 'https://api.stability.ai/v2beta/stable-image/generate/sd3';
+  } else if (model === 'stable-image-ultra') {
+    return 'https://api.stability.ai/v2beta/stable-image/generate/ultra';
+  } else if (model === 'stable-image-core') {
+    return 'https://api.stability.ai/v2beta/stable-image/generate/core';
+  } else if (model.startsWith('stable-diffusion-3.5')) {
+    return 'https://api.stability.ai/v2beta/stable-image/generate/3.5';
+  }
+
+  // Fallback to core endpoint
+  return 'https://api.stability.ai/v2beta/stable-image/generate/core';
+}
+
 async function generateImageFromStabilityAPI(
   apiKey,
   prompt,
   { output_format, aspect_ratio, model, negative_prompt } = {}
 ) {
-  const apiUrl = 'https://api.stability.ai/v2beta/stable-image/generate/sd3';
+  const apiUrl = getEndpointForModel(model);
 
   const body = new FormData();
 
@@ -51,7 +73,15 @@ async function generateImageFromStabilityAPI(
 
   output_format && body.append('output_format', output_format);
   aspect_ratio && body.append('aspect_ratio', aspect_ratio);
-  model && body.append('model', model);
+  
+  // Only append model parameter for SD3 models (other endpoints are model-specific)
+  if (model && model.startsWith('sd3')) {
+    body.append('model', model);
+  } else if (model && model.startsWith('stable-diffusion-3.5')) {
+    // For 3.5 models, append the model parameter
+    body.append('model', model);
+  }
+  
   negative_prompt && body.append('negative_prompt', negative_prompt);
 
   const response = await fetch(apiUrl, {

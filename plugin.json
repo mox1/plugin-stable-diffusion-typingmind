@@ -38,10 +38,18 @@
     {
       "name": "model",
       "label": "Model to use for generation",
-      "description": "Optional, default: \"sd3-large\"",
+      "description": "Optional, default: \"stable-image-core\"",
       "type": "enum",
-      "values": ["sd3-medium", "sd3-large", "sd3-large-turbo"],
-      "defaultValue": "sd3-large"
+      "values": [
+        "sd3-medium",
+        "sd3-large",
+        "sd3-large-turbo",
+        "stable-image-ultra",
+        "stable-image-core",
+        "stable-diffusion-3.5-large",
+        "stable-diffusion-3.5-medium"
+      ],
+      "defaultValue": "stable-image-core"
     },
     {
       "name": "negative_prompt",
