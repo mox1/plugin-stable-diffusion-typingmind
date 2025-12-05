@@ -46,8 +46,8 @@ function getEndpointForModel(model) {
   }
 
   // Route to appropriate endpoint based on model
-  if (model.startsWith('sd3') || model.startsWith('stable-diffusion-3.5')) {
-    // SD3 and 3.5 models use the same endpoint with model parameter
+  if (model.startsWith('sd3')) {
+    // SD3 and 3.5 models (sd3.5-*) use the same endpoint with model parameter
     return 'https://api.stability.ai/v2beta/stable-image/generate/sd3';
   } else if (model === 'stable-image-ultra') {
     return 'https://api.stability.ai/v2beta/stable-image/generate/ultra';
@@ -75,7 +75,7 @@ async function generateImageFromStabilityAPI(
   
   // Append model parameter for SD3 and 3.5 models (they use the same endpoint)
   // Ultra and Core endpoints are model-specific and don't need the model parameter
-  if (model && (model.startsWith('sd3') || model.startsWith('stable-diffusion-3.5'))) {
+  if (model && model.startsWith('sd3')) {
     body.append('model', model);
   }
   

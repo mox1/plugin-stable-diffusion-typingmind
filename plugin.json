@@ -1,6 +1,6 @@
 {
   "id": "image_generation_via_stable_diffusion_3",
-  "uuid": "f582e880-16d8-4a02-b247-86b4cbe9b390",
+  "uuid": "0bcb3d58-b879-4e70-9b0d-3b0ce3f4bf07",
   "userSettings": [
     {
       "name": "stabilityAPIKey",
@@ -72,8 +72,10 @@
         "sd3-large-turbo",
         "stable-image-ultra",
         "stable-image-core",
-        "stable-diffusion-3.5-large",
-        "stable-diffusion-3.5-medium"
+        "sd3.5-medium",
+        "sd3.5-large",
+        "sd3.5-large-turbo",
+        "sd3.5-flash"
       ],
       "defaultValue": "stable-image-core"
     },
