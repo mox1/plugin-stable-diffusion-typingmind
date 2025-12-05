@@ -1,5 +1,7 @@
 {
   "uuid": "0bcb3d58-b879-4e70-9b0d-3b0ce3f4bf07",
+  "name": "Stable Diffusion Plugin",
+  "description": "Generate and edit images using Stability AI's Stable Diffusion models.",
   "userSettings": [
     {
       "name": "stabilityAPIKey",
@@ -90,86 +92,78 @@
   "title": "Stable Diffusion Plugin",
   "pluginFunctions": [
     {
-      "id": "image_generation_via_stable_diffusion_3",
       "name": "image_generation_via_stable_diffusion_3",
-      "implementationType": "javascript",
-      "outputType": "render_markdown",
-      "openaiSpec": {
-        "name": "image_generation_via_stable_diffusion_3",
-        "parameters": {
-          "type": "object",
-          "required": ["prompt"],
-          "properties": {
-            "prompt": {
-              "type": "string",
-              "description": "The text description of the desired image."
-            },
-            "style_preset": {
-              "type": "string",
-              "description": "Optional style preset to guide the image style. This guides the image model towards a particular style.",
-              "enum": [
-                "",
-                "3d-model",
-                "analog-film",
-                "anime",
-                "cinematic",
-                "comic-book",
-                "digital-art",
-                "enhance",
-                "fantasy-art",
-                "isometric",
-                "line-art",
-                "low-poly",
-                "modeling-compound",
-                "neon-punk",
-                "origami",
-                "photographic",
-                "pixel-art",
-                "tile-texture"
-              ],
-              "default": ""
-            }
+      "description": "Generates images using Stable Diffusion ultra,core and 3.5 based on a text description. Adhere to guidelines such as English translation.\n\n Retain text references.\n\nPrompt changes aren't allowed unless they anonymise individuals. All prompts should detail every image part in objective terms within a detailed paragraph of over three sentences.\n\nImportant: after calling this function, the output images will be shown to the user automatically. You don't need to include the output image to the users again in your response to avoid duplicate images.",
+      "parameters": {
+        "type": "object",
+        "required": ["prompt"],
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "The text description of the desired image."
+          },
+          "style_preset": {
+            "type": "string",
+            "description": "Optional style preset to guide the image style. This guides the image model towards a particular style.",
+            "enum": [
+              "",
+              "3d-model",
+              "analog-film",
+              "anime",
+              "cinematic",
+              "comic-book",
+              "digital-art",
+              "enhance",
+              "fantasy-art",
+              "isometric",
+              "line-art",
+              "low-poly",
+              "modeling-compound",
+              "neon-punk",
+              "origami",
+              "photographic",
+              "pixel-art",
+              "tile-texture"
+            ],
+            "default": ""
           }
-        },
-        "description": "Generates images using Stable Diffusion ultra,core and 3.5 based on a text description. Adhere to guidelines such as English translation.\n\n Retain text references.\n\nPrompt changes aren't allowed unless they anonymise individuals. All prompts should detail every image part in objective terms within a detailed paragraph of over three sentences.\n\nImportant: after calling this function, the output images will be shown to the user automatically. You don't need to include the output image to the users again in your response to avoid duplicate images."
-      }
+        }
+      },
+      "implementationType": "javascript",
+      "outputType": "render_markdown"
     },
     {
-      "id": "image_editing_via_stable_diffusion_3",
       "name": "image_editing_via_stable_diffusion_3",
-      "implementationType": "javascript",
-      "outputType": "render_markdown",
-      "openaiSpec": {
-        "name": "image_editing_via_stable_diffusion_3",
-        "parameters": {
-          "type": "object",
-          "required": ["mode", "image"],
-          "properties": {
-            "mode": {
-              "type": "string",
-              "description": "The editing mode to use. Choose based on the user's request:\n- 'erase': Remove unwanted objects from the image (no prompt needed)\n- 'search_and_replace': Find and replace objects in the image (requires prompt and search_prompt)\n- 'search_and_recolor': Change the color of specific objects (requires prompt and select_prompt)\n- 'remove_background': Remove the background, keeping only the foreground (no prompt needed)",
-              "enum": ["erase", "search_and_replace", "search_and_recolor", "remove_background"]
-            },
-            "image": {
-              "type": "string",
-              "description": "The image to edit. This should be the image file attached by the user."
-            },
-            "prompt": {
-              "type": "string",
-              "description": "For 'search_and_replace': What to replace the found object with. For 'search_and_recolor': The new color or color description. Not needed for 'erase' or 'remove_background' modes."
-            },
-            "search_prompt": {
-              "type": "string",
-              "description": "Only for 'search_and_replace' mode: Describes the object to find and replace in the image."
-            },
-            "select_prompt": {
-              "type": "string",
-              "description": "Only for 'search_and_recolor' mode: Describes the object to select for recoloring."
-            }
+      "description": "Edits images using Stability AI's editing capabilities. Supports 4 modes:\n\n1. Erase: Removes unwanted objects from images\n2. Search and Replace: Finds objects and replaces them with something else\n3. Search and Recolor: Changes the color of specific objects\n4. Remove Background: Removes the background, isolating the foreground\n\nThe AI should choose the appropriate mode based on the user's request. Requires an image attachment from the user.\n\nImportant: after calling this function, the output images will be shown to the user automatically. You don't need to include the output image to the users again in your response to avoid duplicate images.",
+      "parameters": {
+        "type": "object",
+        "required": ["mode", "image"],
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "The editing mode to use. Choose based on the user's request:\n- 'erase': Remove unwanted objects from the image (no prompt needed)\n- 'search_and_replace': Find and replace objects in the image (requires prompt and search_prompt)\n- 'search_and_recolor': Change the color of specific objects (requires prompt and select_prompt)\n- 'remove_background': Remove the background, keeping only the foreground (no prompt needed)",
+            "enum": ["erase", "search_and_replace", "search_and_recolor", "remove_background"]
+          },
+          "image": {
+            "type": "string",
+            "description": "The image to edit. This should be the image file attached by the user."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "For 'search_and_replace': What to replace the found object with. For 'search_and_recolor': The new color or color description. Not needed for 'erase' or 'remove_background' modes."
+          },
+          "search_prompt": {
+            "type": "string",
+            "description": "Only for 'search_and_replace' mode: Describes the object to find and replace in the image."
+          },
+          "select_prompt": {
+            "type": "string",
+            "description": "Only for 'search_and_recolor' mode: Describes the object to select for recoloring."
           }
-        },
-        "description": "Edits images using Stability AI's editing capabilities. Supports 4 modes:\n\n1. Erase: Removes unwanted objects from images\n2. Search and Replace: Finds objects and replaces them with something else\n3. Search and Recolor: Changes the color of specific objects\n4. Remove Background: Removes the background, isolating the foreground\n\nThe AI should choose the appropriate mode based on the user's request. Requires an image attachment from the user.\n\nImportant: after calling this function, the output images will be shown to the user automatically. You don't need to include the output image to the users again in your response to avoid duplicate images."
-      }
+        }
+      },
+      "implementationType": "javascript",
+      "outputType": "render_markdown"
     }
   ]
 }
