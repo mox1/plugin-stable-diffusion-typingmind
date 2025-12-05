@@ -104,7 +104,7 @@
     "id": "4105dcae-c4c5-432f-91cd-af69188adda4",
     "method": "POST",
     "name": "",
-    "url": "https://api.stability.ai/v2beta/stable-image/generate/core",
+    "url": "https://api.stability.ai/v2beta/stable-image/generate/",
     "requestBody": "{\"prompt\":\"{prompt}\",\"model\":\"{model}\",\"aspect_ratio\":\"{aspect_ratio}\",\"negative_prompt\":\"{negative_prompt}\",\"output_format\":\"{output_format}\"}",
     "requestBodyFormat": "form-data",
     "requestHeaders": "{\"Accept\":\"application/json; type=image/*\",\"Authorization\":\"Bearer {stabilityAPIKey}\"}",
