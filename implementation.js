@@ -13,15 +13,19 @@ function escapeAlt(text) {
 }
 
 async function image_generation_via_stable_diffusion_3(params, userSettings) {
-  const { prompt } = params;
-  const { stabilityAPIKey } = userSettings;
+  const { prompt, style_preset: stylePresetParam } = params;
+  const { stabilityAPIKey, style_preset: stylePresetSetting } = userSettings;
+  const stylePreset = stylePresetParam ?? stylePresetSetting;
   validateAPIKey(stabilityAPIKey);
 
   try {
     const imageData = await generateImageFromStabilityAPI(
       stabilityAPIKey,
       prompt,
-      userSettings
+      {
+        ...userSettings,
+        style_preset: stylePreset,
+      }
     );
 
     return imageData;
