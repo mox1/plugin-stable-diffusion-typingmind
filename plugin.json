@@ -101,7 +101,7 @@
         },
         "style_preset": {
           "type": "string",
-          "description": "Optional style preset to guide the image style.",
+          "description": "Optional style preset to guide the image style. This guides the image model towards a particular style.",
           "enum": [
             "",
             "3d-model",
